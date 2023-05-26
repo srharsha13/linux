@@ -1,0 +1,5 @@
+1. enable the time stamp history in linux 
+step1: vi .bashrc
+	export HISTTIMEFORMAT="%F %T "
+step2: source .basrc
+
