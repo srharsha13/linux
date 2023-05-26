@@ -3,3 +3,16 @@ step1: vi .bashrc
 	export HISTTIMEFORMAT="%F %T "
 step2: source .basrc
 
+
+2.Enable tab completion in Ubuntu and Debian based Linux distributions
+step1: vi .bashrc
+    # enable bash completion in interactive shells
+	if ! shopt -oq posix; then
+  		if [ -f /usr/share/bash-completion/bash_completion ]; then
+    			. /usr/share/bash-completion/bash_completion
+  		elif [ -f /etc/bash_completion ]; then
+    			. /etc/bash_completion
+  		fi
+	fi
+
+step2: source .basrc
