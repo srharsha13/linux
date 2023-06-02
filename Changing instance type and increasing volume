@@ -1,0 +1,24 @@
+To Change Instance type:
+
+=>stop particular instance
+=>goto actions=>instance settings=>change instance type
+and select paticular instance type
+=>start instance
+
+To increase vol size:
+=> go to aws console and increase the size there with modify
+option according to type (xvdh or xvdf or xvda)
+
+Cmd steps:
+=>go to particular env in cmd
+=>give goto admin
+=>sudo su -
+=>pvs 		                          ( Its shows physical volumes, logical volumes, fmt values)
+=>df -hT 	                          ( It shows  type of file system, size, used, avail , mountpoints of file systems)
+=>pvresize <device name> 	  ( Resizes PhysicalVolume which may already be in a volume group and have active logical volumes allocated on it )
+             example: pvresize /dev/xvdh
+=>lvextend -L <+amount of size to increased> <file-system> 	( To increase the logical volume with respect to the file system )
+             example: lvextend -L +90G /dev/mapper/data-vol
+=>xfs_growfs <mount point>       ( To increase the size of an XFS file system with mount point)
+             example: xfs_growfs /data
+=>df -Th 	                         ( To check whether the volume is increased or not )
