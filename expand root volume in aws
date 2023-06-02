@@ -1,0 +1,49 @@
+NOTE: Not to bring down the server 
+
+STEP1: Login into the AWS console, select the SEI-ADMIN instance, Goto Storage, select the volume -> Actions -> Modify Volume -> change disk size
+
+STEP2: Connect the sei VPN 
+
+STEP3: Connect to sei-dev env through rcf 
+
+STEP4: goto admin 
+
+STEP5: sudo su  
+
+STEP6: [root@admin1 ~]# df -TPh				(to know disk space and type of file system)
+	Filesystem              Size  Used Avail Use% Mounted on
+devtmpfs                1.9G     0  1.9G   0% /dev
+tmpfs                   2.0G   16K  2.0G   1% /dev/shm
+tmpfs                   2.0G  688K  2.0G   1% /run
+tmpfs                   2.0G     0  2.0G   0% /sys/fs/cgroup
+/dev/nvme0n1p1           16G  9.6G  6.5G  60% /
+/dev/mapper/sftp-vol    100G   73G   28G  73% /sftp
+/dev/mapper/data-vol    500G   92G  408G  19% /data
+/dev/mapper/docker-vol  100G  7.2G   93G   8% /docker
+tmpfs                   390M     0  390M   0% /run/user/1000
+/dev/nvme4n1             10G  460M  9.6G   5% /prometheus
+
+STEP7: [root@admin1 / ec2-user]# lsblk		(Lsblk is used to display details about block devices and these block devices(Except ram disk) are basically those files that represent devices connected to the system)
+	NAME          MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+nvme1n1       259:0    0  100G  0 disk
+└─docker-vol  253:2    0  100G  0 lvm  /docker
+nvme2n1       259:1    0  100G  0 disk
+└─sftp-vol    253:1    0  100G  0 lvm  /sftp
+nvme3n1       259:2    0  500G  0 disk
+└─data-vol    253:0    0  500G  0 lvm  /data
+nvme0n1       259:3    0   16G  0 disk
+├─nvme0n1p1   259:4    0   16G  0 part /
+└─nvme0n1p128 259:5    0    1M  0 part
+nvme4n1       259:6    0   10G  0 disk /prometheus
+  
+STEP8: Check the root file system of root and execute the below command as per the changes required
+	growpart /dev/nvme0n1 1			
+		(growpart is one of the utilities to extend the last partition of the disk to fill the available free space on the disk.)
+
+STEP9: xfs_growfs /dev/nvme0n1p1	 (if its xfs file system only this command will work)
+		(xfs_growfs expands an existing XFS filesystem)	
+
+
+STEP10: [root@admin1 ~]# df -TPh			(to know disk space and type of file system)
+	
+
