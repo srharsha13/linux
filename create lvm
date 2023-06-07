@@ -1,0 +1,57 @@
+Step 1) Identify new attached raw disk
+---> sudo dmesg | grep -i sd		or
+---> sudo fdisk -l | grep -i /dev/sd
+
+Step 2) Create PV (Physical Volume)
+---> sudo pvcreate /dev/sdb
+
+Step 3) Create VG (Volume Group)
+---> sudo vgcreate <vg_name>  <pv>
+---> sudo vgcreate volgrp01 /dev/sdb
+
+Run following commands to verify the status of vg (volgrp01)
+
+---> sudo vgs volgrp01
+
+Step 4) Create LV (Logical Volume)
+---> sudo lvcreate -L <Size-of-LV> -n <LV-Name>   <VG-Name>
+---> sudo lvcreate -L 14G -n lv01 volgrp01
+
+Validate the status of lv, run
+
+---> sudo lvs /dev/volgrp01/lv01  or
+---> sudo lvdisplay /dev/volgrp01/lv01
+
+Step 5) Format LVM Partition
+---> sudo mkfs.ext4 /dev/volgrp01/lv01
+
+Execute beneath command to format the lvm partition with xfs file system,
+
+---> sudo mkfs.xfs /dev/volgrp01/lv01
+
+To use above formatted partition, we must mount it on some folder. So, let’s create a folder /mnt/data
+
+---> sudo mkdir /mnt/data
+
+Now run mount command to mount it on /mnt/data folder
+
+---> sudo mount /dev/volgrp01/lv01 /mnt/data/
+
+======================================================================================================================================================
+
+LVM SNAP SHOT
+============
+snap shot :
+
+---> A storage snapshot is an instance of data created as as reference point for data protection and disaster recivery purposes.
+---> 
+
+
+lvcreate --size 500M --snapshot --name snapdata1 /dev/mapper/volgrp01-lv01
+
+mount /dev/mapper/volgrp01-lv01 /reddy -o nouuid,ro
+
+
+6-3
+10-7
+2-11
