@@ -1,0 +1,2 @@
+command: visudo 
+username ALL=(ALL) NOPASSWD: ALL
