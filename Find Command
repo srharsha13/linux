@@ -1,0 +1,114 @@
+find command
+============
+1. Find Files Using Name in Current Directory
+	find . -name ".txt"
+	
+	it prints only related to the exetension of .txt
+	
+2. Find Files Under Home Directory
+	find /home -name ".txt"
+	
+	/home defines the path were the we have to serch the results
+	
+3. Find all the files whose name is abc.txt and contains both capital and small letters in /home directory.
+	find /home -iname abc.txt
+	
+	abc can be capital or small it shows both the results
+
+4. Find all directories whose name is Tecmint in / directory.
+	find / -type d -name Tecmint
+	
+	d means directorie
+	
+5. Find all php files whose name is tecmint.php in a current working directory
+	find . -type f -name tecmint.php
+	
+	f means file name 
+	
+7. Find all the files whose permissions are 777.
+	find . -type f -perm 0777 -print
+	
+	perm means permissions
+	
+8. Find Files Without 777 Permissions
+	find / -type f ! -perm 777
+	
+	! is not equla to
+	
+9. Find all the SGID bit files whose permissions are set to 644.
+	find / -perm 2644
+	
+10. Find all SUID set files.
+	find / -perm /u=s
+	
+11. Find all SGID set files.
+	find / -perm /g=s
+	
+12. Find all Read-Only files.
+	find / -perm /u=r
+
+13. Find all Executable files.
+	find / -perm /a=x
+
+14. Find all 777 permission files and use the chmod command to set permissions to 644.
+	find / -type f -perm 0777 -print -exec chmod 644 {} \;
+	
+15. To find a single file called tecmint.txt and remove it.
+	find . -type f -name "tecmint.txt" -exec rm -f {} \;
+	
+16. To find and remove multiple files such as .mp3 or .txt, then use.
+	find . -type f -name "*.txt" -exec rm -f {} \;
+	
+17. To find all empty files under a certain path.
+	find /tmp -type f -empty
+	
+18. To file all empty directories under a certain path.
+	find /tmp -type d -empty
+	
+19. To find all hidden files, use the below command.
+	find /tmp -type f -name ".*"
+	
+20. To find all or single files called tecmint.txt under / root directory of owner root.
+	find / -user root -name tecmint.txt
+
+21. To find all files that belong to user Tecmint under /home directory.
+	find /home -user tecmint
+	
+22. To find all files that belong to the group Developer under /home directory.
+	find /home -group developer
+
+23. To find all .txt files of user Tecmint under /home directory.
+	find /home -user tecmint -iname "*.txt"
+	
+24. To find all the files which are modified 50 days back.
+	find / -mtime 50
+	
+25. To find all the files which are accessed 50 days back.
+	find / -atime 50
+	
+26. Find Last 50-100 Days Modified Files
+	find / -mtime +50 –mtime -100
+	
+27. To find all the files which are changed in the last 1 hour.
+	find / -cmin -60
+	
+28. To find all the files which are modified in the last 1 hour.													dxcU[bU1V_DEmvw0111258
+	find / -mmin -60 
+	
+29. To find all the files which are accessed in the last 1 hour.
+	find / -amin -60
+	
+20. To find all 50MB files, use.
+	find / -size 50M
+	
+21. To find all the files which are greater than 50MB and less than 100MB.
+	find / -size +50M -size -100M
+	
+22. To find all 100MB files and delete them using one single command.
+	find / -type f -size +100M -exec rm -f {} \;
+	
+23. Find all .mp3 files with more than 10MB and delete them using one single command.
+	find / -type f -name *.mp3 -size +10M -exec rm {} \;
+
+	
+	
